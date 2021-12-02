@@ -11,22 +11,18 @@ export default class TeamTable
         this.api = new Lichess();
     }
 
-    async CreateTable()
+    async CreateTable(): Promise<TableData>
     {
+        
         var data = await this.GetData();
         var users = data.users;
         var tournaments = data.tournaments;
 
-        var cols = [];
-        var rows = [];
+        var cols : ColumnData[] = [];
+        var rows : RowData[] = [];
 
-        var usersCol = new ColumnData();
-        usersCol.id = "users";
-        usersCol.name = "Users";
-
-        var scoreCol = new ColumnData();
-        scoreCol.name = "score";
-        scoreCol.id = "score";
+        var usersCol = new ColumnData("users", "Users");
+        var scoreCol = new ColumnData("score", "score");
 
         cols.push(usersCol);
         cols.push(scoreCol);
@@ -39,20 +35,15 @@ export default class TeamTable
 
         });
 
+        
         for(let tournament of tournaments)
-        {
-            var tournamentCol = new ColumnData();
-            tournamentCol.id = tournament.id;
-            tournamentCol.name = tournament.name;
-
-            cols.push(tournamentCol);
-        }
+            cols.push(new ColumnData(tournament.id, tournament.name));
 
         for(let user of users)
         {
-            var row = [];
+            var row : CellData[] = [];
             let userScore = 0;
-            var cellsTournament = [];
+            var cellsTournament: CellData[] = [];
 
             for(let tournament of tournaments)
             {
@@ -71,16 +62,16 @@ export default class TeamTable
 
             var concatRow = row.concat(cellsTournament);
 
-            rows.push(concatRow);
+            rows.push(new RowData(concatRow));
         }
 
         //sort by score
         rows = rows.sort((row1, row2) => {
             let scoreIndex = 1;
-            return row2[scoreIndex].value - row1[scoreIndex].value;
+            return row2.cells[scoreIndex].value - row1.cells[scoreIndex].value;
         });
 
-        return {cols: cols, rows: rows};
+        return new TableData(cols, rows);
     }
 
 
@@ -100,7 +91,15 @@ export default class TeamTable
 
 class TableData
 {
-    
+    cols: ColumnData[];
+    rows: RowData[];
+
+    constructor(cols: ColumnData[], rows: RowData[])
+    {
+        this.cols = cols;
+        this.rows = rows;
+    }
+
 }
 
 class ColumnData
@@ -108,10 +107,20 @@ class ColumnData
     id: string;
     name: string;
 
-    constructor()
+    constructor(id: string, name: string)
     {
-        this.id = undefined;
-        this.name = undefined;
+        this.id = id;
+        this.name = name;
+    }
+}
+
+class RowData
+{
+    cells: CellData[];
+
+    constructor(cells: CellData[])
+    {
+        this.cells = cells;
     }
 }
 

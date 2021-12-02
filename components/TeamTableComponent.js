@@ -17,7 +17,7 @@ function TeamTableComponent({idTeam})
     {
         debugger;
         return (<tr>
-                    { row.map(e => <td>{e.value}</td>)}
+                    { row.cells.map(e => <td>{e.value}</td>)}
                 </tr>)
     }
 
