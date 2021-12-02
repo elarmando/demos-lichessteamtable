@@ -1,31 +1,33 @@
 class Lichess
 {
+    baseUrl: string;
+
     constructor()
     {
         this.baseUrl = "https://lichess.org/api";
     }
 
-    async getTeam(id)
+    async getTeam(id: string)
     {
         return await this.get(this.baseUrl + "/team/" + id);
     }
 
-    async getTeamUsers(id)
+    async getTeamUsers(id: string)
     {
         return await this.get(this.baseUrl + "/team/" + id +"/users");
     }
 
-    async getTeamTournaments(id)
+    async getTeamTournaments(id: string)
     {
         return await this.get(this.baseUrl + "/team/" + id + "/swiss");
     }
 
-    async getTournamentResuls(idTournament)
+    async getTournamentResuls(idTournament: string)
     {
         return await this.get(this.baseUrl + "/swiss/" + idTournament + "/results");
     }
 
-    async get(url)
+    async get(url: string)
     {
         var res = await fetch(url);
         var contentType = res.headers.get("Content-type");
@@ -49,7 +51,7 @@ class Lichess
             return entries;
         }
         else
-            throw new Exception("Can't parse content type " + contentType);
+            throw new Error("Can't parse content type " + contentType);
     }
 
 

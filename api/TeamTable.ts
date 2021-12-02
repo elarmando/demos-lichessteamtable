@@ -2,6 +2,9 @@ import Lichess from './Lichess'
 
 export default class TeamTable
 {
+    teamId: string;
+    api: Lichess;
+
     constructor(teamid)
     {
         this.teamId = teamid;
@@ -95,8 +98,16 @@ export default class TeamTable
     }
 }
 
+class TableData
+{
+    
+}
+
 class ColumnData
 {
+    id: string;
+    name: string;
+
     constructor()
     {
         this.id = undefined;
@@ -106,6 +117,8 @@ class ColumnData
 
 class CellData
 {
+    value: any;
+
     constructor(value)
     {
         this.value = value;
