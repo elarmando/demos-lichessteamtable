@@ -7,22 +7,22 @@ class Lichess
         this.baseUrl = "https://lichess.org/api";
     }
 
-    async getTeam(id: string)
+    async getTeam(id: string): Promise<Team>
     {
         return await this.get(this.baseUrl + "/team/" + id);
     }
 
-    async getTeamUsers(id: string)
+    async getTeamUsers(id: string): Promise<User[]>
     {
         return await this.get(this.baseUrl + "/team/" + id +"/users");
     }
 
-    async getTeamTournaments(id: string)
+    async getTeamTournaments(id: string): Promise<Tournament[]>
     {
         return await this.get(this.baseUrl + "/team/" + id + "/swiss");
     }
 
-    async getTournamentResuls(idTournament: string)
+    async getTournamentResults(idTournament: string): Promise<TournamentResult[]>
     {
         return await this.get(this.baseUrl + "/swiss/" + idTournament + "/results");
     }
@@ -58,3 +58,80 @@ class Lichess
 }
 
 export default Lichess;
+
+type Team = 
+{
+    id: string,
+    name: string,
+    description: string,
+    open: boolean,
+    leader: TeamLeader,
+    leaders: TeamLeader[],
+    nbMembers:number,
+    location:string
+}
+
+type TeamLeader = 
+{
+    name: string;
+    title: string;
+    patron:boolean;
+    id:string;
+}
+
+type User = 
+{
+    id:string;
+    username:string;
+    online:boolean;
+    perfs:any;
+    createdAt:number;
+    disabled:boolean;
+    tosViolation: boolean;
+    profile:any;
+    seenAt:number;
+    patron:boolean;
+    verified:boolean;
+    playTime:any;
+    title:string;
+    url:string;
+    playing:string;
+    completionRate:97;
+    count:any;
+    streaming:boolean;
+    followable:boolean;
+    following:boolean;
+    blocking:boolean;
+    followsYou:false;
+}
+
+type Tournament = 
+{
+    rated:boolean;
+    clock:any;
+    createdBy:string;
+    greayPlayer:any;
+    id:string;
+    name:string;
+    nbOngoing:number;
+    nbPlayers:number;
+    nbRounds:number;
+    nextRound:any;
+    quote:any;
+    round:number;
+    startsAt:string;
+    status:string;
+    variant:string;
+    results:TournamentResult[];
+}
+
+type TournamentResult = 
+{
+    rank: number;
+    points: number;
+    tieBreak: number;
+    rating: number;
+    username:string;
+    title: string;
+    performance: number;
+}

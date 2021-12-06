@@ -25,21 +25,21 @@ function Home()
         return newValues;
     }
 
-    const fetchUsers = async () =>
+     const fetchUsers = async () =>
     {
         var lichess = new Lichess();
         var users = await lichess.getTeamUsers(id);
         
         return users;
-    }
+    } 
 
     const updateValues = async ()=> 
     {
         var newValues = await fetchValues();
-        var newUsers = await fetchUsers();
+        var newUsers = await fetchUsers(); 
 
         setValues(newValues);
-        setUsers(newUsers);
+        setUsers(newUsers); 
     }
 
 
@@ -48,7 +48,7 @@ function Home()
         <TeamView values={values}></TeamView>
         <br></br>
         users:
-        <TeamUsersView values={users}></TeamUsersView>
+        <TeamUsersView values={users}></TeamUsersView> 
         <TeamTableComponent idTeam={id}></TeamTableComponent>
     </div>);
 }

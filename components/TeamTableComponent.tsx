@@ -1,10 +1,14 @@
 import React from 'react';
-import TeamTable from '../api/TeamTable'
+import {TeamTable, TableData} from '../api/TeamTable'
 
-function TeamTableComponent({idTeam})
+type TeamTableComponentProps ={
+    idTeam: string;
+}
+
+function TeamTableComponent({idTeam} : TeamTableComponentProps)
 {
-    const [table, updateTable] = React.useState({cols: [], rows:[]});
-    React.useEffect(fetchData, [idTeam]);
+    const [table, updateTable] = React.useState(new TableData([], []));
+    React.useEffect(() => {fetchData()}, [idTeam]);
 
     async function fetchData()
     {
@@ -15,7 +19,6 @@ function TeamTableComponent({idTeam})
 
     function renderRow(row)
     {
-        debugger;
         return (<tr>
                     { row.cells.map(e => <td>{e.value}</td>)}
                 </tr>)
@@ -25,9 +28,7 @@ function TeamTableComponent({idTeam})
                 <tr>
                     {table.cols.map(e => <th> {e.name} </th>)}
                 </tr>
-
                 {table.rows.map(e => renderRow(e))}
-
             </table>;
 }
 

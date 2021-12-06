@@ -1,6 +1,6 @@
 import Lichess from './Lichess'
 
-export default class TeamTable
+export class TeamTable
 {
     teamId: string;
     api: Lichess;
@@ -80,7 +80,7 @@ export default class TeamTable
         let tournaments = await this.api.getTeamTournaments(this.teamId);
 
         for (let i = 0; i < tournaments.length; i++)
-            tournaments[i].results = await this.api.getTournamentResuls(tournaments[i].id);
+            tournaments[i].results = await this.api.getTournamentResults(tournaments[i].id);
 
         return {
             users: usuarios,
@@ -89,7 +89,7 @@ export default class TeamTable
     }
 }
 
-class TableData
+export class TableData
 {
     cols: ColumnData[];
     rows: RowData[];
@@ -102,7 +102,7 @@ class TableData
 
 }
 
-class ColumnData
+export class ColumnData
 {
     id: string;
     name: string;
@@ -114,7 +114,7 @@ class ColumnData
     }
 }
 
-class RowData
+export class RowData
 {
     cells: CellData[];
 
@@ -124,7 +124,7 @@ class RowData
     }
 }
 
-class CellData
+export class CellData
 {
     value: any;
 
